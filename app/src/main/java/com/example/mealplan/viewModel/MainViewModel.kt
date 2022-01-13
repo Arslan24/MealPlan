@@ -14,6 +14,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
     // List
     var mealPlanList = MutableLiveData<ArrayList<mealPlan>>()
 
+    // List
+    var menuList = MutableLiveData<ArrayList<String>>()
+
     fun settingMealList() {
         var mealList = ArrayList<mealPlan>()
         for (i in 1..5) {
@@ -35,6 +38,14 @@ class MainViewModel @Inject constructor() : ViewModel() {
         mealTimeList.add(mealIItem2)
 
         return mealTimeList
+    }
+
+    fun settingMenuList() {
+        var menu = ArrayList<String>()
+        for (i in 1..7) {
+            menu.add("Rice & Egg")
+        }
+        menuList.postValue(menu)
     }
 
 }
