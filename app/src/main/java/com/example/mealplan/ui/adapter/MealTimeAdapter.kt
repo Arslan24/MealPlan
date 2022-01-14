@@ -1,5 +1,6 @@
 package com.example.mealplan.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplan.R
 import com.example.mealplan.listeners.ItemAddListeners
 import com.example.mealplan.model.mealPlan
-import com.example.mealplan.ui.activities.MainActivity
 
 class MealTimeAdapter(
-    var mealList: ArrayList<mealPlan>,
-    var context: MainActivity,
+    var mealList: MutableList<mealPlan>,
+    var context: Context,
     var itemAddListeners: ItemAddListeners
 ) :
     RecyclerView.Adapter<MealTimeAdapter.MealTimeViewHolder>() {
@@ -28,7 +28,7 @@ class MealTimeAdapter(
         val mealItem = mealList[position]
         holder.tvDayName.text = mealItem.dayName
 
-        var mealTimeDetailAdapter = MealTimeDetailAdapter(mealItem.mealTimes,itemAddListeners)
+        var mealTimeDetailAdapter = MealTimeDetailAdapter(mealItem.mealTimes, itemAddListeners)
         holder.rvParent.layoutManager = LinearLayoutManager(context)
         holder.rvParent.adapter = mealTimeDetailAdapter
         holder.rvParent.setHasFixedSize(true)
@@ -39,7 +39,7 @@ class MealTimeAdapter(
         return mealList.size
     }
 
-    class MealTimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class MealTimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDayName: AppCompatTextView = view.findViewById(R.id.tvDayName)
         val rvParent: RecyclerView = view.findViewById(R.id.rvParent)
 

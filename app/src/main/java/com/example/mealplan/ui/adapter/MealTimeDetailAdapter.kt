@@ -10,7 +10,10 @@ import com.example.mealplan.R
 import com.example.mealplan.listeners.ItemAddListeners
 import com.example.mealplan.model.mealTime
 
-class MealTimeDetailAdapter(var mealTime: ArrayList<mealTime>,var itemAddListeners: ItemAddListeners) :
+class MealTimeDetailAdapter(
+    var mealTime: ArrayList<mealTime>,
+    var itemAddListeners: ItemAddListeners
+) :
     RecyclerView.Adapter<MealTimeDetailAdapter.MealTimeDetailViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealTimeDetailViewHolder {
@@ -25,8 +28,7 @@ class MealTimeDetailAdapter(var mealTime: ArrayList<mealTime>,var itemAddListene
         holder.tvMeal.text = mealItem.mealMenu
 
         holder.btnAdd.setOnClickListener {
-            itemAddListeners.addItem(position = position)
-
+            itemAddListeners.addItem(positionChild = position, mealItem.parentPos)
         }
 
     }

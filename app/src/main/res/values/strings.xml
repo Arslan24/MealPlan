@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MealPlan</string>
+    <string name="label_title">Recipe</string>
+    <string name="label_message">Please enter recipe name</string>
+    <string name="label_ok">Ok</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_break_fast">BreakFast</string>
+    <string name="label_lunch">Lunch</string>
+    <string name="label_dinner">Dinner</string>
+    <string name="label_menu_item">Rice &amp; Egg %1$s</string>
 </resources>

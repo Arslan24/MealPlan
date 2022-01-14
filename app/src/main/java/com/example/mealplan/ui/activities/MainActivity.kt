@@ -1,14 +1,12 @@
 package com.example.mealplan.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplan.databinding.ActivityMainBinding
 import com.example.mealplan.listeners.ItemAddListeners
-import com.example.mealplan.model.mealPlan
-import com.example.mealplan.ui.adapter.MealTimeAdapter
+import com.example.mealplan.ui.fragment.HomeFragment
+import com.example.mealplan.ui.fragment.MenuFragment
 import com.example.mealplan.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,36 +14,30 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), ItemAddListeners {
 
-    private lateinit var binding: ActivityMainBinding
-    lateinit var mealTimeAdapter: MealTimeAdapter
     var itemAddListeners: ItemAddListeners = this
-
+    private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = mainViewModel
         setContentView(binding.root)
 
         mainViewModel.settingMealList()
+        mainViewModel.settingMenuList()
 
-        mainViewModel.mealPlanList.observe(this) {
-            initMainView(it)
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(binding.rootContainer.id, HomeFragment(itemAddListeners))
+            .commit()
     }
 
-    private fun initMainView(mealList: ArrayList<mealPlan>) {
-
-        mealTimeAdapter = MealTimeAdapter(mealList, this, itemAddListeners)
-        binding.rvMain.layoutManager = LinearLayoutManager(this)
-        binding.rvMain.adapter = mealTimeAdapter
-        binding.rvMain.setHasFixedSize(true)
-    }
-
-    override fun addItem(pos: Int) {
-        var intent = Intent(this, MenuActivity::class.java)
-        intent.putExtra("menuTime", ""+pos)
-        startActivity(intent)
+    override fun addItem(positionChild: Int, positionParent: Int) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.rootContainer.id, MenuFragment(positionChild, positionParent))
+            .addToBackStack(null)
+            .commit()
     }
 
 
